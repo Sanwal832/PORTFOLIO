@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Muhammad Sher Bahdar | CS Student Portfolio</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #05070f;
+    --bg2: #0a0f1e;
+    --card: #0d1428;
+    --blue: #2f7bff;
+    --blue-glow: #4d9aff;
+    --text: #e8eefc;
+    --muted: #8fa3c8;
+    --border: #1b2a4d;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+    line-height: 1.6;
+  }
+
+  /* Glow background orbs */
+  body::before, body::after {
+    content: "";
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    opacity: 0.22;
+    z-index: 0;
+    pointer-events: none;
+  }
+  body::before { width: 420px; height: 420px; background: var(--blue); top: -100px; right: -100px; }
+  body::after  { width: 380px; height: 380px; background: #1747a8; bottom: -120px; left: -120px; }
+
+  .wrap { position: relative; z-index: 1; max-width: 960px; margin: 0 auto; padding: 0 24px; }
+
+  /* Nav */
+  nav {
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(5,7,15,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--border);
+  }
+  nav .wrap { display: flex; align-items: center; justify-content: space-between; height: 62px; }
+  .logo { font-weight: 700; font-size: 1.1rem; letter-spacing: 0.5px; }
+  .logo span { color: var(--blue-glow); }
+  nav ul { display: flex; gap: 26px; list-style: none; }
+  nav a { color: var(--muted); text-decoration: none; font-size: 0.92rem; transition: color 0.2s; }
+  nav a:hover { color: var(--blue-glow); }
+
+  /* Hero */
+  header { padding: 90px 0 70px; text-align: center; }
+  .avatar {
+    width: 110px; height: 110px; margin: 0 auto 22px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--blue), #123a8f);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 2.4rem; font-weight: 800;
+    box-shadow: 0 0 40px rgba(47,123,255,0.45);
+    border: 2px solid var(--blue-glow);
+  }
+  header h1 { font-size: 2.6rem; letter-spacing: 1px; }
+  header h1 span { color: var(--blue-glow); }
+  .tagline { color: var(--muted); font-size: 1.1rem; margin-top: 8px; }
+  .badges { margin-top: 18px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+  .badge {
+    background: rgba(47,123,255,0.12);
+    border: 1px solid var(--border);
+    color: var(--blue-glow);
+    padding: 6px 16px; border-radius: 999px; font-size: 0.85rem;
+  }
+  .cta { margin-top: 28px; }
+  .btn {
+    display: inline-block; padding: 11px 26px; border-radius: 8px;
+    text-decoration: none; font-weight: 600; font-size: 0.95rem;
+    margin: 0 6px; transition: all 0.25s;
+  }
+  .btn-primary { background: var(--blue); color: #fff; box-shadow: 0 4px 20px rgba(47,123,255,0.4); }
+  .btn-primary:hover { background: var(--blue-glow); transform: translateY(-2px); }
+  .btn-ghost { border: 1px solid var(--border); color: var(--text); }
+  .btn-ghost:hover { border-color: var(--blue-glow); color: var(--blue-glow); }
+
+  /* Sections */
+  section { padding: 56px 0; }
+  h2 {
+    font-size: 1.7rem; margin-bottom: 28px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  h2::before { content: ""; width: 6px; height: 26px; background: var(--blue); border-radius: 3px; }
+
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 24px;
+    transition: transform 0.25s, border-color 0.25s, box-shadow 0.25s;
+  }
+  .card:hover { transform: translateY(-4px); border-color: var(--blue); box-shadow: 0 8px 30px rgba(47,123,255,0.15); }
+
+  /* About */
+  .about p { color: var(--muted); max-width: 760px; }
+  .about strong { color: var(--text); }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+  .skill h3 { font-size: 1rem; margin-bottom: 12px; color: var(--blue-glow); }
+  .chip { display: inline-block; background: rgba(47,123,255,0.10); border: 1px solid var(--border); color: var(--text); padding: 5px 13px; border-radius: 999px; font-size: 0.83rem; margin: 4px 5px 4px 0; }
+
+  /* Projects */
+  .proj-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 18px; }
+  .proj h3 { font-size: 1.1rem; margin-bottom: 8px; }
+  .proj p { color: var(--muted); font-size: 0.92rem; }
+  .proj .stack { margin-top: 12px; font-size: 0.8rem; color: var(--blue-glow); }
+
+  /* Education & Contact */
+  .edu-item { display: flex; gap: 16px; align-items: flex-start; }
+  .edu-item .dot { width: 12px; height: 12px; border-radius: 50%; background: var(--blue); margin-top: 7px; box-shadow: 0 0 10px var(--blue); flex-shrink: 0; }
+
+  .contact-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 18px; text-align: center; }
+  .contact-grid a { color: var(--blue-glow); text-decoration: none; word-break: break-all; }
+  .contact-grid a:hover { text-decoration: underline; }
+  .contact-grid .label { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; }
+
+  footer { border-top: 1px solid var(--border); padding: 24px 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
+  footer span { color: var(--blue-glow); }
+
+  @media (max-width: 640px) {
+    nav ul { display: none; }
+    header h1 { font-size: 1.9rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="wrap">
+    <div class="logo">SB<span>.</span></div>
+    <ul>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#education">Education</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap">
+    <div class="avatar">SB</div>
+    <h1>Muhammad Sher <span>Bahdar</span></h1>
+    <p class="tagline">BS Computer Science Student · Aspiring Software Engineer</p>
+    <div class="badges">
+      <span class="badge">💻 Computer Science</span>
+      <span class="badge">🇵🇰 Pakistan</span>
+      <span class="badge">🎓 Undergraduate</span>
+    </div>
+    <div class="cta">
+      <a href="#contact" class="btn btn-primary">Get in Touch</a>
+      <a href="#projects" class="btn btn-ghost">View Projects</a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <div class="card">
+      <p>Hello! I'm <strong>Muhammad Sher Bahdar</strong>, a Bachelor of Science in Computer Science student with a strong passion for technology and problem solving. I enjoy building software, exploring algorithms, and learning how things work under the hood. My goal is to grow into a skilled software engineer who writes clean, efficient and reliable code.</p>
+      <p style="margin-top:14px;">Beyond coursework, I spend my time working on personal projects, practicing programming, and keeping up with the latest trends in software development, artificial intelligence and web technologies.</p>
+    </div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <div class="skills-grid">
+      <div class="card skill">
+        <h3>Programming Languages</h3>
+        <span class="chip">C++</span><span class="chip">Python</span><span class="chip">Java</span><span class="chip">JavaScript</span><span class="chip">C</span>
+      </div>
+      <div class="card skill">
+        <h3>Web Development</h3>
+        <span class="chip">HTML</span><span class="chip">CSS</span><span class="chip">React</span><span class="chip">Node.js</span>
+      </div>
+      <div class="card skill">
+        <h3>Core CS</h3>
+        <span class="chip">Data Structures</span><span class="chip">Algorithms</span><span class="chip">OOP</span><span class="chip">Databases (SQL)</span>
+      </div>
+      <div class="card skill">
+        <h3>Tools</h3>
+        <span class="chip">Git &amp; GitHub</span><span class="chip">VS Code</span><span class="chip">Linux</span><span class="chip">MySQL</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div class="proj-grid">
+      <div class="card proj">
+        <h3>📚 Student Management System</h3>
+        <p>A console-based system to manage student records, enrollments and grades with file persistence and search features.</p>
+        <div class="stack">C++ · File Handling · OOP</div>
+      </div>
+      <div class="card proj">
+        <h3>🌐 Personal Portfolio Website</h3>
+        <p>A responsive personal portfolio built from scratch using modern HTML and CSS with a dark themed design.</p>
+        <div class="stack">HTML · CSS · Responsive Design</div>
+      </div>
+      <div class="card proj">
+        <h3>✅ To-Do Task App</h3>
+        <p>A simple task manager that lets users add, complete and delete tasks with data saved locally in the browser.</p>
+        <div class="stack">JavaScript · DOM · LocalStorage</div>
+      </div>
+      <div class="card proj">
+        <h3>🧮 Calculator App</h3>
+        <p>A fully functional calculator with a clean UI supporting basic arithmetic operations and keyboard input.</p>
+        <div class="stack">JavaScript · CSS Grid · Logic Design</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div class="card edu-item">
+      <div class="dot"></div>
+      <div>
+        <h3 style="font-size:1.05rem;">BS Computer Science</h3>
+        <p style="color:var(--muted);">Currently pursuing my bachelor's degree, focusing on programming, data structures, algorithms, databases and software engineering.</p>
+      </div>
+    </div>
+    <div class="card edu-item" style="margin-top:14px;">
+      <div class="dot"></div>
+      <div>
+        <h3 style="font-size:1.05rem;">Intermediate (FSc / ICS)</h3>
+        <p style="color:var(--muted);">Completed pre-university education with a foundation in mathematics and computer science.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact">
+    <h2>Contact</h2>
+    <div class="contact-grid">
+      <div class="card">
+        <div class="label">Email</div>
+        <a href="mailto:bhaisanwal67@gmail.com">bhaisanwal67@gmail.com</a>
+      </div>
+      <div class="card">
+        <div class="label">Phone</div>
+        <a href="tel:+923334743776">+92-333-4743776</a>
+      </div>
+      <div class="card">
+        <div class="label">Location</div>
+        <p style="color:var(--muted);">Pakistan</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">© 2026 <span>Muhammad Sher Bahdar</span> · Built with HTML &amp; CSS</div>
+</footer>
+
+</body>
+</html>
